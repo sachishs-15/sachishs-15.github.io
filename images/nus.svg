@@ -1,0 +1,6 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="National University of Singapore">
+  <rect width="64" height="64" rx="14" fill="#003d7c"/>
+  <text x="32" y="34.5" text-anchor="middle" font-family="Georgia, 'Times New Roman', serif"
+        font-size="20" font-weight="700" fill="#ffffff" letter-spacing="0.5">NUS</text>
+  <rect x="18" y="41" width="28" height="2.6" rx="1.3" fill="#ef7c00"/>
+</svg>

@@ -51,27 +51,25 @@ window.addEventListener('scroll', () => {
     }
 });
 
-// Project filtering
-const filterButtons = document.querySelectorAll('.filter-btn');
-const projectCards = document.querySelectorAll('.project-card');
-
-filterButtons.forEach(button => {
-    button.addEventListener('click', () => {
-        filterButtons.forEach(btn => btn.classList.remove('active'));
-        button.classList.add('active');
-
-        const filterValue = button.getAttribute('data-filter');
-
-        projectCards.forEach(card => {
-            if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
-                card.style.display = 'block';
-                card.style.animation = 'fadeInUp 0.6s ease-out';
-            } else {
-                card.style.display = 'none';
-            }
-        });
-    });
-});
+// Project filtering (disabled while the Projects section is commented out)
+// const filterButtons = document.querySelectorAll('.filter-btn');
+// const projectCards = document.querySelectorAll('.project-card');
+//
+// filterButtons.forEach(button => {
+//     button.addEventListener('click', () => {
+//         filterButtons.forEach(btn => btn.classList.remove('active'));
+//         button.classList.add('active');
+//         const filterValue = button.getAttribute('data-filter');
+//         projectCards.forEach(card => {
+//             if (filterValue === 'all' || card.getAttribute('data-category') === filterValue) {
+//                 card.style.display = 'block';
+//                 card.style.animation = 'fadeInUp 0.6s ease-out';
+//             } else {
+//                 card.style.display = 'none';
+//             }
+//         });
+//     });
+// });
 
 // Reveal animations
 const observerOptions = {
@@ -88,43 +86,47 @@ const observer = new IntersectionObserver((entries) => {
     });
 }, observerOptions);
 
-const animateElements = document.querySelectorAll('.timeline-item, .project-card, .publication-item, .skill-item, .highlight-card');
+const animateElements = document.querySelectorAll('.timeline-item, .publication-item');
 animateElements.forEach(el => observer.observe(el));
 
-// Form submission
+// Form submission -> opens the visitor's email client, pre-filled
 const contactForm = document.querySelector('.contact-form');
 if (contactForm) {
     contactForm.addEventListener('submit', (e) => {
         e.preventDefault();
 
         const formData = new FormData(contactForm);
-        const name = formData.get('name');
-        const email = formData.get('email');
-        const subject = formData.get('subject');
-        const message = formData.get('message');
+        const name = (formData.get('name') || '').trim();
+        const email = (formData.get('email') || '').trim();
+        const subject = (formData.get('subject') || '').trim();
+        const message = (formData.get('message') || '').trim();
+
+        const status = document.querySelector('.form-status');
+        const setStatus = (text, isError) => {
+            if (!status) return;
+            status.textContent = text;
+            status.classList.toggle('form-status--error', !!isError);
+            status.classList.add('form-status--visible');
+        };
 
         if (!name || !email || !subject || !message) {
-            alert('Please fill in all fields.');
+            setStatus('Please fill in all fields.', true);
             return;
         }
 
         const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
         if (!emailRegex.test(email)) {
-            alert('Please enter a valid email address.');
+            setStatus('Please enter a valid email address.', true);
             return;
         }
 
-        const submitBtn = contactForm.querySelector('button[type="submit"]');
-        const originalText = submitBtn.textContent;
-        submitBtn.textContent = 'Sending...';
-        submitBtn.disabled = true;
+        const body = message + '\n\n--\n' + name + '\n' + email;
+        const mailto = 'mailto:sachishs.15@gmail.com'
+            + '?subject=' + encodeURIComponent(subject)
+            + '&body=' + encodeURIComponent(body);
 
-        setTimeout(() => {
-            alert('Thank you for your message! I will get back to you soon.');
-            contactForm.reset();
-            submitBtn.textContent = originalText;
-            submitBtn.disabled = false;
-        }, 1500);
+        window.location.href = mailto;
+        setStatus('Opening your email client\u2026 If nothing happens, email sachishs.15@gmail.com directly.', false);
     });
 }
 

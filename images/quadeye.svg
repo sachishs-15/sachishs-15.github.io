@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Quadeye">
+  <rect width="64" height="64" rx="14" fill="#0f1c33"/>
+  <path d="M12 32c6.2-8.4 13.1-12.6 20-12.6S45.8 23.6 52 32c-6.2 8.4-13.1 12.6-20 12.6S18.2 40.4 12 32z"
+        fill="none" stroke="#5b8def" stroke-width="3.2" stroke-linejoin="round"/>
+  <circle cx="32" cy="32" r="6.2" fill="#5b8def"/>
+  <circle cx="34.2" cy="29.6" r="2.1" fill="#0f1c33"/>
+</svg>
